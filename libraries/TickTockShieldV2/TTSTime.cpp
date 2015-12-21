@@ -29,11 +29,6 @@
 #include <Wire.h>
 #include "TTSTime.h"
 
-#define YEAR        13
-#define MONTH       11
-#define DAY         21
-#define WEEK        4
-
 #define I2CADDR     0x68
 
 /*********************************************************************************************************

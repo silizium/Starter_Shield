@@ -33,6 +33,10 @@
 #define uchar unsigned char 
 #endif
 
+#define YEAR        15
+#define MONTH       12
+#define DAY         18
+#define WEEK        5
 
 class TTSTime{
 
@@ -43,7 +47,7 @@ private:
 public:
 
     TTSTime(){Wire.begin();}
-    void setTime(uchar hour, uchar min, uchar sec);                 // set time
+    void setTime(uchar hour, uchar min, uchar sec);			        // set time
     void getTime(uchar *hour, uchar *min, uchar *sec);              // get time
     uchar getHour();                                                // get hour
     uchar getMin();                                                 // get minutes

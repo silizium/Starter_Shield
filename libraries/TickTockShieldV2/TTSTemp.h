@@ -43,13 +43,11 @@ private:
     
 public:
 
-    TTSTemp()
-    {
-        __pin = PINTEMP;
+    TTSTemp(byte pin=PINTEMP){
+        __pin = pin;
     }
     
-    int get()                                   // get temperature
-    {
+    float getFloat(){                           // get temperature
         int a = 0;
 
         for(int i=0; i<32; i++)
@@ -59,10 +57,15 @@ public:
         
         a >>= 5;
         
+		  //if(a==0) return -99.0;   // no division 0!!!
         float resistance=(float)(1023-a)*10000/a; //get the resistance of the sensor;
+		  //if(resistance < 0.01) return -99.0;
         float temperature=1/(log(resistance/10000)/3975+1/298.15)-273.15;//convert to temperature via datasheet ;
        
         return temperature;
+    }
+    int get(){                                  // get temperature
+        return getFloat();
     }
       
 };

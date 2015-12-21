@@ -31,14 +31,26 @@
 
 #include "TTSDisplay.h"
 
-//0~9,A,b,C,d,E,F,"-"," "
+//0~9,A,b,C,d,E,F,"-","HJLMnPQrTUvY"
 const uchar TubeTab[] = 
 {
     0x3f,0x06,0x5b,0x4f,
     0x66,0x6d,0x7d,0x07,
     0x7f,0x6f,0x77,0x7c,
     0x39,0x5e,0x79,0x71,
-    0x40,0x00
+    0x40,0x00,
+	 0x76, //H 18
+	 0x0F, //J 19
+	 0x38, //L 20
+	 0x37, //M 21
+	 0x54, //n 22
+	 0x73, //P 23
+	 0xBF, //Q 24
+	 0x50, //r 25
+	 0x07, //T 26
+	 0x3e, //U 27
+	 0x1c, //v 28
+	 0x72, //Y 29
 };
     
 #define PINCLK      7                   // pin of clk 
@@ -160,6 +172,39 @@ void TTSDisplay::time(uchar hour, uchar min)
     display(1, min/10);
     display(0, min%10);
 }
+
+/*********************************************************************************************************
+ * Function Name: temp
+ * Description:  display temperature
+ * Parameters: temp - Temperature
+ *             
+ * Return: None
+*********************************************************************************************************/
+void TTSDisplay::temp(int temp){
+	pointOff();
+	if(temp < 0 && temp>-100){ //-99…-1
+		display(3, 16);
+		temp=-temp;
+		display(2, (temp>9?(temp/10)%10:17));
+		display(1, temp%10);
+		display(0, 12);
+	}else
+	if(temp < 1000 && temp >= 0){	// 0…999
+		display(3, temp>99?temp/100:17);
+		display(2, (temp>9?(temp/10)%10:17));
+		display(1, temp%10);
+		display(0, 12);
+	}else
+	if(temp >= 1000 && temp < 10000){
+		num(temp);
+	}else{
+		display(3, 0xe);
+		display(2, 25);
+		display(1, 25);
+		display(3, 17);
+	}
+}
+
     
 /*********************************************************************************************************
  * Function Name: clear
@@ -299,10 +344,13 @@ uchar TTSDisplay::coding(uchar DispData)
 {
 
     uchar PointData = _PointFlag ? 0x80 : 0x00;
-    DispData = (0x7f == DispData) ? PointData : (TubeTab[DispData]+PointData);
+    DispData = (0x7f == DispData) ? PointData : (TubeTab[DispData&0x7f]+PointData);
     return DispData;
 }
-    
+   
+void TTSDisplay::brightness(uchar value){
+	set(value);
+}
    
 /*********************************************************************************************************
   END FILE

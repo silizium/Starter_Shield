@@ -85,11 +85,12 @@ public:
     void display(uchar loca, uchar dta);                // display a single num(0-9)
     void num(int dta);                                  // display a num (0-9999)    
     void time(uchar hour, uchar min);                   // display time, such as: 11:26
+	 void temp(int temp);										  // display temperature * 10 in C like 10.1C
     void clear();                                       // clear display
     
     void pointOn();                                     // display :
     void pointOff();                                    // undisplay :
-
+	 void brightness(uchar value);
 };
 
 #endif
