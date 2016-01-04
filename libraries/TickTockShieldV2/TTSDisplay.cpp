@@ -50,7 +50,7 @@ const uchar TubeTab[] =
 	 0x07, //T 26
 	 0x3e, //U 27
 	 0x1c, //v 28
-	 0x72, //Y 29
+	 0x6e, //Y 29
 };
     
 #define PINCLK      7                   // pin of clk 
